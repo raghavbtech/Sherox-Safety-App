@@ -1,4 +1,5 @@
 import React,{useEffect} from "react";
+import { triggerEmergency } from "../utils/emergencyHandler";
 
 const VoiceWakeWord=()=>{
     useEffect(()=>{
@@ -19,7 +20,7 @@ const VoiceWakeWord=()=>{
             console.log('Heard: ',transcript);
             if(transcript.toLowerCase().includes('help me sherox')){
                 alert('Emergency Triggered!');
-                // Later: call emergency backend or save to IndexedDB
+                triggerEmergency({source:'voice'})
             }
         };
 

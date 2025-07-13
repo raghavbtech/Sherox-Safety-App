@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import Webcam from "react-webcam";
 import Tesseract from "tesseract.js";
+import { triggerEmergency } from "../utils/emergencyHandler";
 
 const NumberPlateScanner = () => {
   const webcamRef = useRef(null);
@@ -38,6 +39,11 @@ const NumberPlateScanner = () => {
       const cleanText = text.replace(/[^A-Z0-9]/gi, "").toUpperCase();
       setResult(cleanText);
       console.log("Cleaned Plate:", cleanText);
+
+      triggerEmergency({
+        plateNumber:cleanText,
+        source:'ocr'
+      });
     };
   };
 
