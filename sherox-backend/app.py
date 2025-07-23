@@ -268,6 +268,15 @@ def compute_safe_score_from_traffic(level):
     else:
         return "N/A"
 
+@app.route("/api/trusted-contacts/count", methods=["GET"])
+def trusted_contacts_count():
+    user_email = request.args.get("user_email")
+    if not user_email:
+        return jsonify({"error": "Missing user_email"}), 400
+
+    count = TrustedContact.query.filter_by(user_email=user_email).count()
+    return jsonify({"count": count}), 200
+
 @app.route("/api/route/safest", methods=["POST"])
 def get_safe_score():
     data = request.json
