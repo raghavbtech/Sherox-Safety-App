@@ -17,7 +17,7 @@ from geopy.distance import geodesic
 
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, origins=["https://sherox-safety-app.vercel.app"])
 
 # 🔧 Config
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sherox.db'
