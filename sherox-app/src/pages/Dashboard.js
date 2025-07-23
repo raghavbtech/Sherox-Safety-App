@@ -7,6 +7,7 @@ import VehicleScanner from '../components/VehicleScanner';
 import VoiceDistressDetector from '../components/VoiceDistressDetector';
 import VoiceSOS from '../components/VoiceSOS';
 import { Shield, MapPin, Users, Camera, Mic, Phone, Route, Wifi, AlertTriangle, Activity, BarChart3, Clock, Zap, Star, TrendingUp, CheckCircle } from 'lucide-react';
+import API_BASE_URL from '../apiConfig';
 
 function Dashboard() {
   const [trustedContactsCount, setTrustedContactsCount] = useState(0);
@@ -17,7 +18,7 @@ function Dashboard() {
     const fetchTrustedContacts = async () => {
       try {
         // Replace with your actual API endpoint
-        const response = await fetch('/api/trusted-contacts/count');
+        const response = await fetch(`${API_BASE_URL}/api/trusted-contacts/count`);
         const data = await response.json();
         setTrustedContactsCount(data.count || 0);
       } catch (error) {
