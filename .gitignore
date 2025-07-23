@@ -1,0 +1,34 @@
+# Node modules for frontend
+sherox-app/node_modules/
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+
+sherox-app/.pnp
+sherox-app/.pnp.js
+
+# testing
+sherox-app/coverage
+
+# production
+sherox-app/build
+
+sherox-app/.env
+# misc
+sherox-app/.DS_Store
+sherox-app/.env.local
+sherox-app/.env.development.local
+sherox-app/.env.test.local
+sherox-app/.env.production.local
+
+sherox-app/npm-debug.log*
+sherox-app/yarn-debug.log*
+sherox-app/yarn-error.log*
+
+
+# Python virtual environment for backend (if any)
+sherox-backend/venv/
+sherox-backend/__pycache__/
+
+# Build folders
+sherox-app/build/
