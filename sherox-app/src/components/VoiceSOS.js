@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Mic, MicOff, Volume2, AlertTriangle, Shield, Activity, Info, MapPin, Clock } from 'lucide-react';
 import API_BASE_URL from "../apiConfig";
+import { getAuthHeaders, handleAuthResponse } from "../utils/api";
 
 const VoiceSOS = () => {
   const [isListening, setIsListening] = useState(false);
@@ -35,9 +36,12 @@ const VoiceSOS = () => {
         recognition.stop();
         setIsListening(false);
 
-        const userEmail = localStorage.getItem("user_email");
-        if (!userEmail) {
+        const token = localStorage.getItem("token");
+        if (!token) {
           alert("User not logged in. SOS aborted.");
+          if (window.location.pathname !== "/login") {
+            window.location.href = "/login";
+          }
           return;
         }
 
@@ -67,14 +71,14 @@ const VoiceSOS = () => {
           const message = `🚨 SOS Alert from SheRox!\nLocation: ${location.address}\n📍Track: ${mapsLink}`;
           const res = await fetch(`${API_BASE_URL}/api/contacts/send-sos`, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
+            headers: getAuthHeaders(),
             body: JSON.stringify({
-              user_email: userEmail,
               message: message,
               plate_number: localStorage.getItem("last_plate") || "Unknown"
             }),
           });
 
+          await handleAuthResponse(res);
           const data = await res.json();
 
           if (data.return === false || data.status_code === 412) {
@@ -218,9 +222,12 @@ const VoiceSOS = () => {
 
 // Export the triggerSOS function for use by other components
 export const triggerSOS = async (customMessage = "🚨 Emergency Alert!") => {
-  const userEmail = localStorage.getItem("user_email");
-  if (!userEmail) {
+  const token = localStorage.getItem("token");
+  if (!token) {
     alert("User not logged in. SOS aborted.");
+    if (window.location.pathname !== "/login") {
+      window.location.href = "/login";
+    }
     return;
   }
 
@@ -233,17 +240,13 @@ export const triggerSOS = async (customMessage = "🚨 Emergency Alert!") => {
     location.lat = pos.coords.latitude;
     location.lng = pos.coords.longitude;
 
-    const geocodeRes = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.lat},${location.lng}&key=AIzaSyDqq5Z8m3RQ12kAD_nOdzNSR7C32Nklr20`
+    // Use free OpenStreetMap Nominatim for reverse geocoding (no API key needed)
+    const geoRes = await fetch(
+      `https://nominatim.openstreetmap.org/reverse?format=json&lat=${location.lat}&lon=${location.lng}`,
+      { headers: { "Accept-Language": "en" } }
     );
-    const geocodeData = await geocodeRes.json();
-    if (
-      geocodeData.results &&
-      geocodeData.results[0] &&
-      geocodeData.results[0].formatted_address
-    ) {
-      location.place = geocodeData.results[0].formatted_address;
-    }
+    const geoData = await geoRes.json();
+    location.place = geoData.display_name || `${location.lat}, ${location.lng}`;
   } catch (err) {
     console.warn("Location access or reverse geocoding failed:", err);
   }
@@ -255,13 +258,14 @@ export const triggerSOS = async (customMessage = "🚨 Emergency Alert!") => {
   try {
     const res = await fetch(`${API_BASE_URL}/api/contacts/send-sos`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: getAuthHeaders(),
       body: JSON.stringify({
-        user_email: userEmail,
         message: finalMessage,
+        plate_number: localStorage.getItem("last_plate") || undefined,
       }),
     });
 
+    await handleAuthResponse(res);
     const data = await res.json();
     console.log("✅ SOS sent:", data);
     alert("🚨 Emergency SOS sent to your trusted contacts.");
