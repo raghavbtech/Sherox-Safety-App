@@ -6,7 +6,7 @@ import SafetyCircle from '../components/SafetyCircle';
 import VehicleScanner from '../components/VehicleScanner';
 import VoiceDistressDetector from '../components/VoiceDistressDetector';
 import VoiceSOS from '../components/VoiceSOS';
-import { Shield, MapPin, Users, Camera, Mic, Phone, Route, Wifi, AlertTriangle, Activity, BarChart3, Clock, Zap, Star, TrendingUp, CheckCircle } from 'lucide-react';
+import { Shield, Users, Camera, Mic, Route, Wifi, AlertTriangle, Activity, BarChart3, Clock, Zap, Star, TrendingUp, CheckCircle } from 'lucide-react';
 import API_BASE_URL from '../apiConfig';
 import { getAuthHeaders, handleAuthResponse } from '../utils/api';
 

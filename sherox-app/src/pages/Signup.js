@@ -13,9 +13,7 @@ import {
   ArrowRight,
   Mic,
   User,
-  Star,
   Globe,
-  Heart,
   Zap,
   Award
 } from "lucide-react";

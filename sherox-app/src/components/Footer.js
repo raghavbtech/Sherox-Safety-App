@@ -23,34 +23,34 @@ const Footer = () => {
               and discover your potential.
             </p>
             <div className="flex items-center space-x-4">
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-pink-600 transition-colors"
+              <span
+                className="text-gray-400"
                 aria-label="Facebook"
+                role="img"
               >
                 <Facebook size={20} />
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-pink-600 transition-colors"
+              </span>
+              <span
+                className="text-gray-400"
                 aria-label="Twitter"
+                role="img"
               >
                 <Twitter size={20} />
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-pink-600 transition-colors"
+              </span>
+              <span
+                className="text-gray-400"
                 aria-label="Instagram"
+                role="img"
               >
                 <Instagram size={20} />
-              </a>
-              <a 
-                href="#" 
-                className="text-gray-400 hover:text-pink-600 transition-colors"
+              </span>
+              <span
+                className="text-gray-400"
                 aria-label="LinkedIn"
+                role="img"
               >
                 <Linkedin size={20} />
-              </a>
+              </span>
             </div>
           </div>
 

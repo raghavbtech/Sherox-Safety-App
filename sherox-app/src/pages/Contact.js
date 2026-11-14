@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Mail, Instagram, Phone, MapPin, Send, MessageCircle, Clock, Globe, Shield, Heart, Star, CheckCircle, ArrowRight, Sparkles, TrendingUp } from "lucide-react";
+import { Mail, Instagram, Phone, Send, MessageCircle, Clock, Shield, Heart, Star, ArrowRight } from "lucide-react";
 
 const Contact = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

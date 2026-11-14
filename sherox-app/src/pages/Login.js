@@ -12,10 +12,7 @@ import {
   CheckCircle,
   ArrowRight,
   Mic,
-  Download,
-  Star,
   Globe,
-  Heart,
   Zap
 } from "lucide-react";
 import API_BASE_URL from "../apiConfig";

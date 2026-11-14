@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Mic, MicOff, Volume2, AlertTriangle, Shield, Activity, Info, MapPin, Clock } from 'lucide-react';
+import { Mic, MicOff, Volume2, Info } from 'lucide-react';
 import API_BASE_URL from "../apiConfig";
 import { getAuthHeaders, handleAuthResponse } from "../utils/api";
 

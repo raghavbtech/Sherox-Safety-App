@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { Shield, Zap, Users, Globe, Award, CheckCircle, Star, Heart, Clock, MapPin, ArrowRight, Sparkles, TrendingUp } from "lucide-react";
+import { Shield, Zap, Users, Globe, Award, Heart, Clock, MapPin, ArrowRight } from "lucide-react";
 
 const About = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -8,7 +8,6 @@ const About = () => {
   const [counters, setCounters] = useState({});
   const [isLoaded, setIsLoaded] = useState(false);
   const [hoveredCard, setHoveredCard] = useState(null);
-  const [focusedElement, setFocusedElement] = useState(null); // State for accessibility focus
   const observerRef = useRef();
   const sectionRefs = useRef({});
   const animationFrameRef = useRef();
@@ -31,6 +30,7 @@ const About = () => {
 
   // Enhanced intersection observer with multiple thresholds
   useEffect(() => {
+    const counterAnimations = counterAnimationsRef.current;
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
@@ -67,7 +67,7 @@ const About = () => {
         cancelAnimationFrame(animationFrameRef.current);
       }
       // Clean up counter animations
-      Object.values(counterAnimationsRef.current).forEach((id) => {
+      Object.values(counterAnimations).forEach((id) => {
         if (id) cancelAnimationFrame(id);
       });
     };
@@ -991,8 +991,6 @@ const About = () => {
               },
               onMouseEnter: () => setHoveredCard('cta-primary'),
               onMouseLeave: () => setHoveredCard(null),
-              onFocus: () => setFocusedElement('cta-primary'),
-              onBlur: () => setFocusedElement(null),
             },
             React.createElement("div", {
               className: "absolute inset-0 bg-gradient-to-r from-transparent via-gray-200/30 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000",
@@ -1011,8 +1009,6 @@ const About = () => {
               },
               onMouseEnter: () => setHoveredCard('cta-secondary'),
               onMouseLeave: () => setHoveredCard(null),
-              onFocus: () => setFocusedElement('cta-secondary'),
-              onBlur: () => setFocusedElement(null),
             },
             React.createElement("div", {
               className: "absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12 -translate-x-full group-hover:translate-x-full transition-transform duration-1000",

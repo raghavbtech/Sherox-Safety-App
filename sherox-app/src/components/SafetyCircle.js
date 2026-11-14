@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   addSafetyContact,
   getSafetyContacts,
@@ -12,7 +12,7 @@ const SafetyCircle = () => {
   const [form, setForm] = useState({ name: "", number: "" });
   const [loading, setLoading] = useState(false);
 
-  const fetchContacts = async () => {
+  const fetchContacts = useCallback(async () => {
     if (!token) return;
     try {
       const data = await getSafetyContacts();
@@ -21,11 +21,11 @@ const SafetyCircle = () => {
       console.error("Failed to fetch contacts:", error);
       setContacts([]);
     }
-  };
+  }, [token]);
 
   useEffect(() => {
     fetchContacts();
-  }, []);
+  }, [fetchContacts]);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });

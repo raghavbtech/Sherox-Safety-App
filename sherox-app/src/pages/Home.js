@@ -196,9 +196,6 @@ const Home = () => {
     }
   ];
 
-  // Testimonial state (no auto-scroll for better control)
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
-
   // Variants for staggered animations
   const containerVariants = {
     hidden: { opacity: 0 },
