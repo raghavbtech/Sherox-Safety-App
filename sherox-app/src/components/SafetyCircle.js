@@ -7,15 +7,15 @@ import {
 import { Users, UserPlus, Phone, Trash2, Shield, User, AlertCircle, CheckCircle } from 'lucide-react';
 
 const SafetyCircle = () => {
-  const user_email = localStorage.getItem("user_email");
+  const token = localStorage.getItem("token");
   const [contacts, setContacts] = useState([]);
   const [form, setForm] = useState({ name: "", number: "" });
   const [loading, setLoading] = useState(false);
 
   const fetchContacts = async () => {
-    if (!user_email) return;
+    if (!token) return;
     try {
-      const data = await getSafetyContacts(user_email);
+      const data = await getSafetyContacts();
       setContacts(Array.isArray(data) ? data : []);
     } catch (error) {
       console.error("Failed to fetch contacts:", error);
@@ -45,21 +45,21 @@ const SafetyCircle = () => {
     setLoading(true);
     try {
       await addSafetyContact({
-        user_email,
-        contact_name: form.name,
-        contact_number: form.number,
+        name: form.name,
+        number: form.number,
       });
       setForm({ name: "", number: "" });
       fetchContacts();
     } catch (error) {
       console.error("Failed to add contact:", error);
+      alert(error.message || "Failed to add contact");
     }
     setLoading(false);
   };
 
   const handleDelete = async (id) => {
     try {
-      await deleteSafetyContact(user_email, id);
+      await deleteSafetyContact(id);
       fetchContacts();
     } catch (error) {
       console.error("Failed to delete contact:", error);

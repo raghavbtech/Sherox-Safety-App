@@ -1,7 +1,7 @@
-const isProduction = process.env.NODE_ENV === 'production';
-
-const API_BASE_URL = isProduction
-  ? 'https://sherox-safety-app.onrender.com'  // replace this with your deployed URL later
-  : 'http://localhost:5000';     // local development server
+const API_BASE_URL =
+  process.env.REACT_APP_API_URL ||
+  (process.env.NODE_ENV === 'production'
+    ? 'https://sherox-safety-app.onrender.com'
+    : 'http://localhost:5000');
 
 export default API_BASE_URL;
